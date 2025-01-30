@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Recommended.css";
-
+import { Link } from "react-router-dom";
 import thumbnail1 from "../../assets/thumbnail1.png";
 import thumbnail2 from "../../assets/thumbnail2.png";
 import thumbnail3 from "../../assets/thumbnail3.png";
@@ -10,15 +10,16 @@ import thumbnail6 from "../../assets/thumbnail6.png";
 import thumbnail7 from "../../assets/thumbnail7.png";
 import thumbnail8 from "../../assets/thumbnail8.png";
 import { API_KEY, value_converter } from "../../data";
-import { Link } from "react-router-dom";
+
 const Recommended = ({ categoryId }) => {
     const [apiData, setApiData] = useState([]);
     const fetchData = async () => {
-        const relatedVideo_URL = `https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetail%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=US&videoCategoryId=${categoryId}&key=${API_KEY}`;
+        const relatedVideo_URL = `https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=US&videoCategoryId=${categoryId}&key=${API_KEY}`;
         await fetch(relatedVideo_URL)
             .then((res) => res.json())
             .then((data) => setApiData(data.items));
     };
+    // console.log("apiData----" + apiData,categoryId);
     useEffect(() => {
         fetchData();
     }, []);
